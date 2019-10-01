@@ -28,12 +28,13 @@
                                 <th>Year</th>
                                 <th>Hours</th>
                             </th>
-                            @foreach( $rapports as $rapport)        
+                            @foreach( $rapports as $rapport)  
                                 <tr>
-                                    <td>{{$rapport->month}}</td>
-                                    <td>{{$rapport->year}}</td>
-                                    <td>{{$rapport->hours}}</td>
-                                </tr>
+                                    <td>{{ $rapport->month??'' }}</td>
+                                    <td>{{ $rapport->year??'' }}</td>
+                                    <td>{{ $rapport->Hours??'' }}</td>
+
+                                </tr>                             
                             @endforeach
                         </table>
 
