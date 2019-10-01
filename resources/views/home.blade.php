@@ -15,6 +15,7 @@
                     @endif
 
                     You are logged in!
+                    <P><a href="/rapport">See Reports</a>
                 </div>
             </div>
         </div>

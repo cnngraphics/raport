@@ -18,3 +18,6 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/rapport', 'RapportController@index')->name('rapport');
+Route::get('/add-rapport', 'RapportController@create')->name('create-rapport');

@@ -13,10 +13,29 @@ class CreateRapportsTable extends Migration
      */
     public function up()
     {
+
+        /**
+         * Placements (Printed Electronics)
+         * Video Showings
+         * Hours
+         * Return Visits
+         * Number of Different Bible Studies Conducted
+         * 
+         */
         Schema::create('rapports', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('user_id'); //foreign key
             $table->timestamps();
-            $table->yearMonths_id();
+            $table->string('year')->nullable();
+            $table->string('month')->nullable();
+            $table->integer('Placements')->nullable();
+            $table->integer('Videos')->nullable();
+            $table->integer('Hours')->nullable();
+            $table->integer('Visits')->nullable();
+            $table->integer('Studies')->nullable();
+            $table->string('Comments')->nullable();
+
+            $table->index('user_id');
         });
     }
 

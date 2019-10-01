@@ -82,7 +82,7 @@
             <div class="content">
                 <div class="title m-b-md">
                   
-                    Reporting Dashboard - {{ $thisMonth}}
+                    
                 </div>
 
                 <div class="links">
