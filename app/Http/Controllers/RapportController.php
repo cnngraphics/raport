@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\rapportSubmitted;
 use Illuminate\Http\Request;
 use \App\Rapport;
 use \Carbon\Carbon;
 use Auth;
+use Mail;
 
 
 class RapportController extends Controller
@@ -13,15 +15,29 @@ class RapportController extends Controller
 
     protected $month='';
     protected $year='';
+
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        
+        // dd($request->user()); // is currently logged in user
+
+        Mail::to($request->user())->send(new rapportSubmitted());
+
+
         $user = Auth::user();
+        // dd($user);
+
         $cuid= $user->id;
 
         $this->month = $this->setMonth();
