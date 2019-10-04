@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use \App\Rapport;
 use \Carbon\Carbon;
+use Auth;
+
 
 class RapportController extends Controller
 {
@@ -18,22 +20,24 @@ class RapportController extends Controller
      */
     public function index()
     {
-        $m = $this->setMonth()->getMonth();
-        $y = $this->setYear()->getYear();
-      
-      
-        $data = Rapport::all();
+        
+        $user = Auth::user();
+        $cuid= $user->id;
 
-  
-        //$data = collect(['month'=>$m, 'year'=>$y]);
-    //   dd($data);
-        // return view('raport', $this->compact('data'));
+        $this->month = $this->setMonth();
+        $this->month = $this->getMonth();
+
+        // $this->year = getYear()->$this->setYear();
+        $this->year = $this->setYear();
+        $this->year = $this->getYear();
+          
+
+        $data = Rapport::all()->where('user_id', $cuid);
+
         return view('rapport',[
             'rapports'=>$data,
-
-            //this part is good
             'thisMonth'=> $this->getMonth(),
-            'thisYear' => $this->getYear()
+            'thisYear' => $this->getYear(),
             ]);
     }
 
@@ -45,13 +49,12 @@ class RapportController extends Controller
      */
     public function create()
     {
-        $data = [
-            'month' => $this-getMonth(),
-            'year' => $this->getYear()
-        ];
+        $this->setMonth();
+        $this->setYear();
 
         return view('create-rapport', [
-            'rapports'=>$data,
+            'thisMonth'=> $this->getMonth(),
+            'thisYear' => $this->getYear(),
         ]);
     }
 
@@ -136,7 +139,7 @@ class RapportController extends Controller
         $date = Carbon::today();    
         $this->year = $date->year;
         
-        return $this;
+        return $this->year;
     }
 
     /**
@@ -162,6 +165,6 @@ class RapportController extends Controller
 
         }
         
-        return $this;
+        return $this->month;
     }
 }

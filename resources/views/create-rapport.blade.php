@@ -49,7 +49,8 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Add Rapports for Month of- {{ $thisMonth ??'' }} {{ $thisYear ??'' }}</div>
+                
+                <div class="card-header">Add Rapports for <b>{{ $thisMonth ??'' }}, {{ $thisYear ??'' }}</b></div>
 
                 <div class="card-body">
                     @if (session('status'))
