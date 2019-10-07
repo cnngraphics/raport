@@ -43,7 +43,7 @@
                                     <td>{{ $rapport->Videos??'' }}</td>
                                     <td>{{ $rapport->Visits??'' }}</td>
                                     <td>{{ $rapport->Studies??'' }}</td>
-                                    <td>{{ $rapport->comments??'' }}</td>
+                                    <td>{{ $rapport->Comments??'' }}</td>
                                     
 
                                 </tr>                             

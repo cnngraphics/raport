@@ -21,3 +21,5 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/rapport', 'RapportController@index')->name('rapport');
 Route::get('/create-rapport', 'RapportController@create')->name('create-rapport');
+Route::post('/rapport-save', 'RapportController@store');
+Route::get('/success', 'RapportController@success');

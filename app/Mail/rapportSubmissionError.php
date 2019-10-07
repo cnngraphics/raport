@@ -6,16 +6,11 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Http\Request;
-use Auth;
-use App\Rapport;
 
-
-class rapportSubmitted extends Mailable
+class rapportSubmissionError extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $user;
     /**
      * Create a new message instance.
      *
@@ -24,7 +19,6 @@ class rapportSubmitted extends Mailable
     public function __construct()
     {
         //
-        $this->user = Auth::user();
     }
 
     /**
@@ -34,14 +28,9 @@ class rapportSubmitted extends Mailable
      */
     public function build()
     {
-        $name = $this->user->name;
-        
-
         return $this->from('cnngraphics@gmail.com', 'Theophile M')
-                    ->subject("User $name Submitted a Rapport")
-                    ->view('mail.email')
+                    ->subject("Error Submitting Rapport")
                     ->to('cnngraphics@gmail.com', 'Tester')
-                    ;
+                    ->view('mail.rapport-submission-error');
     }
-    
 }

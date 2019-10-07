@@ -7,7 +7,9 @@ use Illuminate\Http\Request;
 use \App\Rapport;
 use \Carbon\Carbon;
 use Auth;
+use Exception;
 use Mail;
+
 
 
 class RapportController extends Controller
@@ -20,6 +22,9 @@ class RapportController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+
+        $this->month = $this->setMonth();
+        $this->year = $this->setYear();
     }
 
 
@@ -30,24 +35,11 @@ class RapportController extends Controller
      */
     public function index(Request $request)
     {
-        // dd($request->user()); // is currently logged in user
-
-        Mail::to($request->user())->send(new rapportSubmitted());
-
+        // dd(request()->headers->get('referer')); // is currently logged in user
 
         $user = Auth::user();
-        // dd($user);
-
         $cuid= $user->id;
-
-        $this->month = $this->setMonth();
-        $this->month = $this->getMonth();
-
-        // $this->year = getYear()->$this->setYear();
-        $this->year = $this->setYear();
-        $this->year = $this->getYear();
-          
-
+        
         $data = Rapport::all()->where('user_id', $cuid);
 
         return view('rapport',[
@@ -65,9 +57,7 @@ class RapportController extends Controller
      */
     public function create()
     {
-        $this->setMonth();
-        $this->setYear();
-
+      
         return view('create-rapport', [
             'thisMonth'=> $this->getMonth(),
             'thisYear' => $this->getYear(),
@@ -82,7 +72,41 @@ class RapportController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        // dd($request->input());
+        // return redirect('/rapport');
+        // Form action target for saving
+        
+            // Month	Year	Hours	Placements	Videos	Visits	Studies	Comments
+            $rapport = new \App\Rapport;
+            
+            $last = Rapport::find(\DB::table('rapports')->max('id'));
+            // dd($last->id);
+
+            $rapport->user_id = $request->user()->id;
+            // $rapport->id = $last->id+1;
+            $rapport->month = $request->input('Month');
+            $rapport->year = $request->input('Year');
+            $rapport->Hours = $request->input('Hours');
+            $rapport->Placements = $request->input('Placements');
+            $rapport->Videos = $request->input('videos');
+            $rapport->Visits = $request->input('Visits');
+            $rapport->Studies = $request->input('Studies');
+            $rapport->Comments = $request->input('Comments');
+
+            // dd($rapport);
+            
+            try {
+                $rapport->push();
+                // Submission was successful - send email to admin
+                Mail::to($request->user())->send(new rapportSubmitted());
+                return redirect('/rapport');
+            } catch( Exception $e) {
+                dd($e);
+                Mail::to($request->user())->send(new rapportSubmissionError());    
+        }
+
+        
     }
 
     /**
