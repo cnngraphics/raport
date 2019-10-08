@@ -18,14 +18,18 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.js" charset="utf-8"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+    
+
     @yield('script')
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+
+
 </head>
 <body>
+
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
@@ -82,5 +86,9 @@
             @yield('content')
         </main>
     </div>
+
+
+    </div>
 </body>
+@yield('chartScript')
 </html>
